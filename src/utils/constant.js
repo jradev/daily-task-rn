@@ -1,8 +1,5 @@
 
-export const FONTS = {
-    regular: 'Lato-Regular',
-    bold: 'Lato-Bold',
-    black: 'Lato-Black',
-    light: 'Lato-Light',
-    italic: 'Lato-Italic'
-}
+// SCREENS
+export const HOME_SCREEN = 'HOME_SCREEN';
+export const ADD_TASK_SCREEN = 'ADD_TASK_SCREEN';
+export const VIEW_TASK_SCREEN = 'VIEW_TASK_SCREEN';
