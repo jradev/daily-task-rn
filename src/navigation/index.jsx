@@ -4,13 +4,13 @@ import { Button, Pressable, useColorScheme } from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
-import { HOME_SCREEN, ADD_TASK_SCREEN, VIEW_TASK_SCREEN } from '@utils/constant';
+import { HOME_SCREEN, ADD_EDIT_TASK_SCREEN, VIEW_TASK_SCREEN } from '@utils/constant';
 import COLORS from '../utils/colors';
 
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 // VIEWS
-import AddTaskScreen from '../views/add-task';
+import AddEditTaskScreen from '../views/add-edit-task';
 import HomeScreen from '../views/home';
 import TaskDetailsScreen from '../views/task-details';
 
@@ -37,7 +37,7 @@ export default AppNavigation = (props) => {
             headerTitle: '',
             headerRight: () => (
                 <Pressable
-                    onPress={() => navigation.push(ADD_TASK_SCREEN)}
+                    onPress={() => navigation.push(ADD_EDIT_TASK_SCREEN)}
                 >
                 <MaterialCommunityIcons name="note-plus-outline" color={theme === 'dark' ? COLORS.white : COLORS.black } size={24} />
                 </Pressable>
@@ -48,7 +48,7 @@ export default AppNavigation = (props) => {
             />
 
             <Stack.Screen
-            name={ADD_TASK_SCREEN}
+            name={ADD_EDIT_TASK_SCREEN}
             options={({route, navigation}) => ({
                 presentation: 'modal',
                 headerTitle: 'Create Task',
@@ -65,7 +65,7 @@ export default AppNavigation = (props) => {
                     ),
                 }
             )}
-            component={AddTaskScreen}
+            component={AddEditTaskScreen}
             />
 
             <Stack.Screen

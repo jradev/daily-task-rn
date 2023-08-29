@@ -1,6 +1,6 @@
 
-import React, { useCallback, useLayoutEffect, useState } from "react";
-import { useNavigation } from "@react-navigation/native";
+import React, { useCallback, useEffect, useLayoutEffect, useState } from "react";
+import { useIsFocused, useNavigation } from "@react-navigation/native";
 
 import Container from "@components/container";
 import { Animated, Button, Pressable, Text, TextInput, View, useColorScheme } from "react-native";
@@ -9,19 +9,34 @@ import COLORS from "@utils/colors";
 import DatePicker from "react-native-date-picker";
 import { formatDate } from "@utils/helper";
 import { Picker } from "@react-native-picker/picker";
-import { TASK_TYPE } from "../../utils/constant";
+import { STATUS, TASK_TYPE } from "@utils/constant";
+import { useDispatch, useSelector } from "react-redux";
+import { addTask, updateTask } from "@app-redux/action";
 
 export default function(props){
     
     const navigation = useNavigation();
 
+    const { route } = props;
+    
+    const isEditing = route?.params?.isEditing || false;
+
+    const selectedTask = useSelector(store => store.task);
+
     const [isStartDateOpen, setIsStartDateOpen] = useState(false);
-    const [startDate, setStartDate] = useState(null);
-    const [taskType, setTaskType] = useState('home');
+    const [startDate, setStartDate] = useState(isEditing ? selectedTask?.task?.startDate : null);
+    const [taskType, setTaskType] = useState(isEditing ? selectedTask?.task?.type : 'home');
+
+    const [taskTitle, setTaskTitle] = useState(isEditing ? selectedTask?.task?.title : null);
+    const [taskDescription, setTaskDescription] = useState(isEditing ? selectedTask?.task?.description : '');
 
     const [isEndDateOpen, setIsEndDateOpen] = useState(false);
     const [isTaskTypeOpen, setIsTaskTypeOpen] = useState(false);
-    const [endDate, setEndDate] = useState(null);
+    const [endDate, setEndDate] = useState(isEditing ? selectedTask?.task?.endDate : null);
+
+    const isFocused = useIsFocused();
+
+    const dispatch = useDispatch();
 
     const theme = useColorScheme();
 
@@ -29,14 +44,18 @@ export default function(props){
 
     useLayoutEffect(() => {
         navigation.setOptions({
+          headerTitle: `${isEditing ? 'Update' : 'Create'} Task`,
           headerRight: () => (
             <Button 
-            title="Add"
-            disabled={true}
+            title={isEditing ? 'Update' : 'Add'}
+            disabled={!taskTitle || !startDate}
+            onPress={() => _onTaskAction()}
             />
           ),
         });
-      }, [navigation]);
+    }, [navigation, startDate, endDate, taskTitle, taskDescription, taskType, isEditing]);
+
+
 
     const _onToggleStartDate = useCallback(() => {
       if(!startDate) setStartDate(new Date())
@@ -58,17 +77,50 @@ export default function(props){
 
     const _onSelectEndDate = useCallback((date) => {
       setEndDate(date);
-    }, [])
+    }, []);
+
+    const _onTaskAction = useCallback(() => {
+      if(isEditing){
+        dispatch(updateTask(selectedTask?.id, {
+          title: taskTitle,
+          description: taskDescription,
+          startDate: startDate,
+          endDate: endDate ? endDate : new Date(new Date().setHours((new Date()).getHours() + 1)),
+          type: taskType,
+          status: selectedTask.status,
+        }));
+        navigation.pop(2);
+      }else{
+        dispatch(addTask({
+          title: taskTitle,
+          description: taskDescription,
+          startDate: startDate,
+          endDate: endDate ? endDate : new Date(new Date().setHours((new Date()).getHours() + 1)),
+          type: taskType,
+          status: STATUS.upcoming,
+        }));
+        navigation.goBack();
+      }
+
+    }, [startDate, endDate, taskTitle, taskDescription, taskType, isEditing]);
+
+    const _onChangeTitle = useCallback((value) => setTaskTitle(value),[taskTitle]);
+
+    const _onChangeDescription = (value) => setTaskDescription(value);
 
     return (
         <Container>
             <View style={styles.container}>
               <TextInput 
+              defaultValue={taskTitle}
+              onChangeText={_onChangeTitle}
               placeholderTextColor={theme === 'dark' ? COLORS.lightgray : COLORS.placeholder}
               placeholder="Task Title"
               style={styles.title}
               />
               <TextInput 
+              defaultValue={taskDescription}
+              onChangeText={_onChangeDescription}
               placeholderTextColor={theme === 'dark' ? COLORS.lightgray : COLORS.placeholder}
               placeholder="Description"
               style={styles.description}

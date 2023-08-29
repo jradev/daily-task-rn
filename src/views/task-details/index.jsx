@@ -1,21 +1,33 @@
 
-import React, { useCallback, useLayoutEffect, useState } from "react";
-import { useNavigation } from "@react-navigation/native";
+import React, { useCallback, useEffect, useLayoutEffect, useState } from "react";
+import { useIsFocused, useNavigation } from "@react-navigation/native";
 
 import Container from "@components/container";
-import { Animated, Button, Text, View, useColorScheme } from "react-native";
+import { Alert, Animated, Button, Text, View, useColorScheme } from "react-native";
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { lightStyles } from "./styles";
 import COLORS from "@utils/colors";
 import { formatDate } from "@utils/helper";
+import { useDispatch, useSelector } from "react-redux";
+import { STATUS, ADD_EDIT_TASK_SCREEN } from "@utils/constant";
+import { doneTask, deleteTask } from "@app-redux/action";
+import { TASK_TYPE } from "@utils/constant";
 
 export default function(props){
     
     const navigation = useNavigation();
 
+    const selectedTask = useSelector(store => store.task);
+
+    const dispatch = useDispatch();
+
+
+    const { task } = selectedTask;
+
+    const isFocused = useIsFocused();
+
     const theme = useColorScheme();
 
-    const isDone = true;
 
     const styles = lightStyles;
 
@@ -24,24 +36,61 @@ export default function(props){
           headerRight: () => (
             <Button 
             title="Edit"
-            disabled={false}
+            onPress={_onEditTask}
             />
           ),
         });
     }, [navigation]);
 
+    const _onEditTask = useCallback(() => {
+        navigation.navigate(ADD_EDIT_TASK_SCREEN, {
+            isEditing: true
+        });
+    }, []);
+
+    const _onDeleteTask = useCallback(() => {
+
+        Alert.alert('Confirmation', 'Are you sure you want to delete this task?', [
+            {
+              text: 'Cancel',
+              onPress: () => {},
+              style: 'cancel',
+            },
+            {text: 'OK', onPress: () => {
+                dispatch(deleteTask(selectedTask?.id));
+                navigation?.goBack();
+            }},
+        ]);
+
+    }, [selectedTask]);
+
+    const _onMarkAsDone = useCallback(() => {
+
+        Alert.alert('Confirmation', 'Are you sure you want to mark this task as done?', [
+            {
+              text: 'Cancel',
+              onPress: () => {},
+              style: 'cancel',
+            },
+            {text: 'OK', onPress: () => {
+                dispatch(doneTask(selectedTask?.id));
+            }},
+        ]);
+    }, [selectedTask]);
+
     return (
         <Container>
+            <View style={{backgroundColor: task?.type === TASK_TYPE.home ? COLORS.lightblue: COLORS.red, height: 2}} />
             <View style={styles.container}>
-                <Text style={styles.title}>Water Bill Payment</Text>
-                <Text style={styles.description}>Paying of water bill for the month of August 2023.</Text>
+                <Text style={styles.title}>{task?.title}</Text>
+                {task?.description && <Text style={styles.description}>{task?.description}</Text>}
             </View>
             <View style={styles.container}>
                 <Text style={styles.date}>{formatDate(new Date(), 'LLLL')}</Text>
             </View>
 
             {
-            isDone 
+            task?.status === STATUS.done 
             ? 
             <View style={styles.status}>
                 <MaterialCommunityIcons name="checkbox-marked-circle-outline" color={COLORS.green} size={48} />
@@ -50,14 +99,15 @@ export default function(props){
             <View style={styles.action}>
                 <Button 
                 title="Mark as done"
-                />
-
-                <Button 
-                color={COLORS.red}
-                title="Delete task"
+                onPress={_onMarkAsDone}
                 />
             </View>
             }
+            <Button 
+            color={COLORS.red}
+            onPress={_onDeleteTask}
+            title="Delete task"
+            />
         </Container>
     )
 }

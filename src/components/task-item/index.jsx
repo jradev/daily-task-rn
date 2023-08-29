@@ -6,30 +6,54 @@ import COLORS from '@utils/colors';
 import { STATUS } from '@utils/constant';
 import { useNavigation } from '@react-navigation/native';
 import { VIEW_TASK_SCREEN } from '@utils/constant';
+import { isSameDay, formatDate } from '@utils/helper';
+import { TASK_TYPE } from '@utils/constant';
+import { useDispatch } from 'react-redux';
+import { viewTask } from '../../redux/action';
 
 
 const Item = (props) => {
     
-    const { title, status } =  props;
+    const { task, id } = props;
+
+    if(!task) return null;
+
+    const { type, title, status, startDate, endDate } =  task;
 
     const navigation = useNavigation();
+
+    const dispatch = useDispatch();
 
     const theme = useColorScheme();
 
     const styles = theme === 'dark' ? darkStyles : lightStyles;
 
+    const sameDay = isSameDay(startDate, endDate);
+
     const _onViewTaskDetails = React.useCallback(() => {
+        dispatch(viewTask(id));
         navigation.navigate(VIEW_TASK_SCREEN);
-    },[props])
+    },[task]);
 
     return(
         <Pressable  onPress={_onViewTaskDetails}>
         <View style={styles.container}>
-            <View style={styles.separator} />
+            <View style={[ styles.separator, {backgroundColor: type === TASK_TYPE.home ? COLORS.lightblue : COLORS.red } ]} />
             <View style={styles.textContainer}>
-                <Text style={styles.title} numberOfLines={2}>{title || 'Meralco Bill Payment - July 2023 Billing'}</Text>
-                <Text style={styles.date}>Aug 25, 2023</Text>
-                <Text style={styles.time}>10:00 AM - 9:00 PM</Text>
+                <Text style={styles.title} numberOfLines={2}>{title || ''}</Text>
+                {
+                sameDay 
+                ?
+                <React.Fragment>
+                    <Text style={styles.date}>{formatDate(startDate, 'll')}</Text>
+                    <Text style={styles.time}>{formatDate(startDate, 'LT')} - {formatDate(endDate, 'LT')}</Text>
+                </React.Fragment>
+                :
+                <React.Fragment>
+                    <Text style={styles.date}>{formatDate(startDate, 'MMM D')} - {formatDate(endDate, 'D YYYY')}</Text>
+                    <Text style={styles.time}>{formatDate(startDate, 'LT')} - {formatDate(endDate, 'LT')}</Text>
+                </React.Fragment>
+                }
             </View>
             <View style={styles.icon}>
                 {
