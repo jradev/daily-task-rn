@@ -18,6 +18,7 @@ export const lightStyles = StyleSheet.create({
     },
     description: {
         paddingVertical: 8,
+        paddingRight: 8,
         verticalAlign: 'top',
         fontSize: SIZE.small,
         fontFamily: FAMILY.regular
