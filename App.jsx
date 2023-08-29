@@ -5,7 +5,7 @@
  * @format
  */
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import {
   SafeAreaView,
@@ -18,6 +18,9 @@ import {
   Colors,
 } from 'react-native/Libraries/NewAppScreen';
 
+import BootSplash from "react-native-bootsplash";
+
+
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 
@@ -27,6 +30,12 @@ import AppNavigation from '@navigation/index';
 
 function App(props) {
   const isDarkMode = useColorScheme() === 'dark';
+
+  useEffect(() => {
+    const init = setTimeout(() => {BootSplash?.hide({ fade: true })}, 1000);
+    return () => clearTimeout(init);
+  }, []);
+
 
   const backgroundStyle = {
     backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
