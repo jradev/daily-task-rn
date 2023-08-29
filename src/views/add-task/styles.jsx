@@ -34,23 +34,26 @@ export const lightStyles = StyleSheet.create({
         justifyContent: 'center', 
         alignItems: 'center'
     },
+    typePicker: {
+        flex: 1
+    },
     dateRow: {
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-between'
     },
-    date: {
+    value: {
         fontSize: SIZE.regular,
         fontFamily: FAMILY.regular,
     },
-    dateValueContainer: {
+    valueContainer: {
         marginRight: 16,
         paddingHorizontal: 8,
         paddingVertical: 6,
         borderRadius: 6,
         backgroundColor: COLORS.lightgray,
     },
-    dateLabelText: {
+    labelText: {
         fontSize: SIZE.regular,
         fontFamily: FAMILY.regular,
     },
@@ -66,4 +69,16 @@ export const lightStyles = StyleSheet.create({
     lastItem: {
         borderBottomWidth: 0,      
     },
+    typeContainer: {
+        backgroundColor: 'transparent', 
+        flexDirection: 'row', 
+        alignItems: 'center',
+},
+    valueIndicator: {
+        height: 12,
+        width: 12,
+        borderRadius: 12,
+        backgroundColor: COLORS.lightblue,
+        marginLeft: 8,
+    }
 });

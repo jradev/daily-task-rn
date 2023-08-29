@@ -7,3 +7,8 @@ export const STATUS = {
   done: 'DONE',
   upcoming: 'UPCOMING',
 };
+
+export const TASK_TYPE = {
+  home: 'home',
+  work: 'work',
+};

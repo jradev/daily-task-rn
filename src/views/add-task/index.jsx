@@ -8,16 +8,20 @@ import { lightStyles } from "./styles";
 import COLORS from "@utils/colors";
 import DatePicker from "react-native-date-picker";
 import { formatDate } from "@utils/helper";
+import { Picker } from "@react-native-picker/picker";
+import { TASK_TYPE } from "../../utils/constant";
 
 export default function(props){
     
     const navigation = useNavigation();
 
-    const [isStartDateOpen, setIsStartDateOpen] = useState(false)
-    const [startDate, setStartDate] = useState(null)
+    const [isStartDateOpen, setIsStartDateOpen] = useState(false);
+    const [startDate, setStartDate] = useState(null);
+    const [taskType, setTaskType] = useState('home');
 
-    const [isEndDateOpen, setIsEndDateOpen] = useState(false)
-    const [endDate, setEndDate] = useState(null)
+    const [isEndDateOpen, setIsEndDateOpen] = useState(false);
+    const [isTaskTypeOpen, setIsTaskTypeOpen] = useState(false);
+    const [endDate, setEndDate] = useState(null);
 
     const theme = useColorScheme();
 
@@ -39,9 +43,18 @@ export default function(props){
       setIsStartDateOpen(date => !date);
     }, [isStartDateOpen]);
 
+    const _onToggleEndDate = useCallback(() => {
+      if(!endDate) setEndDate(new Date(new Date().setHours((new Date()).getHours() + 1)));
+      setIsEndDateOpen(date => !date);
+    }, [isEndDateOpen]);
+
+    const _onToggleTaskTask = useCallback(() => {
+      setIsTaskTypeOpen(open => !open);
+    }, []);
+
     const _onSelectStartDate = useCallback((date) => {
       setStartDate(date);
-    }, [])
+    }, []);
 
     const _onSelectEndDate = useCallback((date) => {
       setEndDate(date);
@@ -66,9 +79,9 @@ export default function(props){
             <View style={styles.container}>
               <View style={styles.dateItem}>
                 <Pressable onPress={_onToggleStartDate} style={styles.dateRow}>
-                  <Text style={styles.dateLabelText}>Start</Text>
-                  <View style={[styles.dateValueContainer, !startDate && {backgroundColor: 'transparent'}]}>
-                    <Text style={styles.date}>{startDate && formatDate(startDate)}</Text>
+                  <Text style={styles.labelText}>Start</Text>
+                  <View style={[styles.valueContainer, !startDate && {backgroundColor: 'transparent'}]}>
+                    <Text style={styles.value}>{startDate && formatDate(startDate)}</Text>
                   </View>
                 </Pressable>
                 {isStartDateOpen && <Animated.View style={styles.picker}>
@@ -81,10 +94,10 @@ export default function(props){
                 </Animated.View>}
               </View> 
               <View style={[styles.dateItem, styles.lastItem]}>
-                <Pressable onPress={_onToggleStartDate} style={styles.dateRow}>
-                  <Text style={styles.dateLabelText}>End</Text>
-                  <View style={[styles.dateValueContainer, !endDate && {backgroundColor: 'transparent'}]}>
-                    <Text style={styles.date}>{endDate && formatDate(endDate)}</Text>
+                <Pressable onPress={_onToggleEndDate} style={styles.dateRow}>
+                  <Text style={styles.labelText}>End</Text>
+                  <View style={[styles.valueContainer, !endDate && {backgroundColor: 'transparent'}]}>
+                    <Text style={styles.value}>{endDate && formatDate(endDate)}</Text>
                   </View>
                 </Pressable>
                 {isEndDateOpen && <Animated.View style={styles.picker}>
@@ -96,6 +109,29 @@ export default function(props){
                   />
                 </Animated.View>}
               </View>              
+            </View>
+
+            <View style={styles.container}>
+            <View style={styles.typeItem}>
+                <Pressable onPress={_onToggleTaskTask} style={styles.dateRow}>
+                  <Text style={styles.labelText}>Type</Text>
+                  <View style={[styles.valueContainer, styles.typeContainer]}>
+                    <Text style={[styles.value, { textTransform: 'capitalize' }]}>{taskType || ''}</Text>
+                    <View style={[styles.valueIndicator, {backgroundColor: taskType === TASK_TYPE.home ? COLORS.lightblue : COLORS.red }]} />
+                  </View>
+                </Pressable>
+                {isTaskTypeOpen && <View style={styles.typePicker}>
+                  <Picker
+                    selectedValue={taskType}
+                    onValueChange={(itemValue, itemIndex) =>
+                  setTaskType(itemValue)
+                    }>
+                    <Picker.Item label="Home" value="home" />
+                    <Picker.Item label="Work" value="work" />
+                  </Picker>
+                </View>}
+              </View> 
+            
             </View>
             
         </Container>

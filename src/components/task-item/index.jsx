@@ -1,19 +1,29 @@
 import React, { useEffect } from 'react';
-import { Text, View, useColorScheme } from 'react-native';
+import { Pressable, Text, View, useColorScheme } from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {darkStyles , lightStyles} from './styles';
 import COLORS from '@utils/colors';
 import { STATUS } from '@utils/constant';
+import { useNavigation } from '@react-navigation/native';
+import { VIEW_TASK_SCREEN } from '@utils/constant';
 
 
 const Item = (props) => {
     
     const { title, status } =  props;
+
+    const navigation = useNavigation();
+
     const theme = useColorScheme();
 
     const styles = theme === 'dark' ? darkStyles : lightStyles;
 
+    const _onViewTaskDetails = React.useCallback(() => {
+        navigation.navigate(VIEW_TASK_SCREEN);
+    },[props])
+
     return(
+        <Pressable  onPress={_onViewTaskDetails}>
         <View style={styles.container}>
             <View style={styles.separator} />
             <View style={styles.textContainer}>
@@ -30,6 +40,7 @@ const Item = (props) => {
                 }
             </View>
         </View>
+        </Pressable>
     )
 }
 

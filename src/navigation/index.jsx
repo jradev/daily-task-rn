@@ -4,7 +4,7 @@ import { Button, Pressable, useColorScheme } from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
-import { HOME_SCREEN, ADD_TASK_SCREEN } from '@utils/constant';
+import { HOME_SCREEN, ADD_TASK_SCREEN, VIEW_TASK_SCREEN } from '@utils/constant';
 import COLORS from '../utils/colors';
 
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -12,6 +12,7 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 // VIEWS
 import AddTaskScreen from '../views/add-task';
 import HomeScreen from '../views/home';
+import TaskDetailsScreen from '../views/task-details';
 
 
 const Stack = createNativeStackNavigator();
@@ -65,6 +66,20 @@ export default AppNavigation = (props) => {
                 }
             )}
             component={AddTaskScreen}
+            />
+
+            <Stack.Screen
+            name={VIEW_TASK_SCREEN}
+            options={({route, navigation}) => ({
+                presentation: 'card',
+                headerTitle: 'Task Details',
+                headerStyle: {
+                    color: theme === 'dark' ? COLORS.white : COLORS.black
+                },
+
+                }
+            )}
+            component={TaskDetailsScreen}
             />
         </Stack.Navigator>
         </NavigationContainer>
