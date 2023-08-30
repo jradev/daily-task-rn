@@ -63,7 +63,10 @@ To run the application
     <img src="/screenshots/create-task.png" width="150"/> 
     <img src="/screenshots/details.png" width="150"/> 
 </p>
-
+Splash
+<p float="left">
+    <img src="/screenshots/splash.png" width="150"/>
+</p>
 
 ## Issues?
 
