@@ -1,7 +1,7 @@
 import COLORS from "@utils/colors";
 import { SIZE, FAMILY } from "@utils/fonts";
 
-import { Platform, StyleSheet } from 'react-native';
+import { StyleSheet } from 'react-native';
 
 
 export const lightStyles = StyleSheet.create({
@@ -38,15 +38,6 @@ export const lightStyles = StyleSheet.create({
         justifyContent: 'center', 
         alignItems: 'center'
     },
-    typePicker: {
-        flex: 1
-    },
-    pickerItem: {
-        marginLeft: Platform.select({
-            android: -12,
-            ios: 0
-        }),
-    },
     dateRow: {
         flexDirection: 'row',
         alignItems: 'center',
@@ -79,16 +70,5 @@ export const lightStyles = StyleSheet.create({
     lastItem: {
         borderBottomWidth: 0,      
     },
-    typeContainer: {
-        backgroundColor: 'transparent', 
-        flexDirection: 'row', 
-        alignItems: 'center',
-},
-    valueIndicator: {
-        height: 12,
-        width: 12,
-        borderRadius: 12,
-        backgroundColor: COLORS.lightblue,
-        marginLeft: 8,
-    }
+
 });

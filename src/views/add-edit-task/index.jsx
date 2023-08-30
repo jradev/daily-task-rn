@@ -7,11 +7,11 @@ import { Animated, Button, Pressable, ScrollView, Text, TextInput, View, useColo
 import { lightStyles } from "./styles";
 import COLORS from "@utils/colors";
 import DatePicker from "react-native-date-picker";
-import { formatDate } from "@utils/helper";
-import { Picker } from "@react-native-picker/picker";
-import { STATUS, TASK_TYPE } from "@utils/constant";
+import { STATUS } from "@utils/constant";
 import { useDispatch, useSelector } from "react-redux";
 import { addTask, updateTask } from "@app-redux/action";
+import TypePicker from "../../components/type-picker";
+import PressableItem from "../../components/pressable-item";
 
 export default function AddEditTaskScreen(props){
     
@@ -43,18 +43,22 @@ export default function AddEditTaskScreen(props){
     const styles = lightStyles;
 
     useLayoutEffect(() => {
-        navigation.setOptions({
-          headerTitle: `${isEditing ? 'Update' : 'Create'} Task`,
-          headerRight: () => (
-            <Button 
-            title={isEditing ? 'Update' : 'Add'}
-            disabled={!taskTitle || !startDate}
-            onPress={() => _onTaskAction()}
-            />
-          ),
-        });
+        initHeader();
     }, [navigation, startDate, endDate, taskTitle, taskDescription, taskType, isEditing]);
 
+
+    const initHeader = () => {
+      navigation.setOptions({
+        headerTitle: `${isEditing ? 'Update' : 'Create'} Task`,
+        headerRight: () => (
+          <Button 
+          title={isEditing ? 'Update' : 'Add'}
+          disabled={!taskTitle || !startDate}
+          onPress={() => _onTaskAction()}
+          />
+        ),
+      });
+    }
 
 
     const _onToggleStartDate = useCallback(() => {
@@ -132,12 +136,11 @@ export default function AddEditTaskScreen(props){
 
             <View style={styles.container}>
               <View style={styles.dateItem}>
-                <Pressable onPress={_onToggleStartDate} style={styles.dateRow}>
-                  <Text style={styles.labelText}>Start</Text>
-                  <View style={[styles.valueContainer, !startDate && {backgroundColor: 'transparent'}]}>
-                    <Text style={styles.value}>{startDate && formatDate(startDate)}</Text>
-                  </View>
-                </Pressable>
+                <PressableItem 
+                label={'Start'}
+                value={startDate}
+                onPress={_onToggleStartDate}
+                />
                 {isStartDateOpen && <Animated.View style={styles.picker}>
                   <DatePicker
                     mode='datetime'
@@ -148,12 +151,11 @@ export default function AddEditTaskScreen(props){
                 </Animated.View>}
               </View> 
               <View style={[styles.dateItem, styles.lastItem]}>
-                <Pressable onPress={_onToggleEndDate} style={styles.dateRow}>
-                  <Text style={styles.labelText}>End</Text>
-                  <View style={[styles.valueContainer, !endDate && {backgroundColor: 'transparent'}]}>
-                    <Text style={styles.value}>{endDate && formatDate(endDate)}</Text>
-                  </View>
-                </Pressable>
+                <PressableItem 
+                label={'End'}
+                value={endDate}
+                onPress={_onToggleEndDate}
+                />
                 {isEndDateOpen && <Animated.View style={styles.picker}>
                   <DatePicker
                     mode='datetime'
@@ -167,24 +169,18 @@ export default function AddEditTaskScreen(props){
 
             <View style={styles.container}>
             <View style={styles.typeItem}>
-                <Pressable onPress={_onToggleTaskTask} style={styles.dateRow}>
-                  <Text style={styles.labelText}>Type</Text>
-                  <View style={[styles.valueContainer, styles.typeContainer]}>
-                    <Text style={[styles.value, { textTransform: 'capitalize' }]}>{taskType || ''}</Text>
-                    <View style={[styles.valueIndicator, {backgroundColor: taskType === TASK_TYPE.home ? COLORS.lightblue : COLORS.red }]} />
-                  </View>
-                </Pressable>
-                {isTaskTypeOpen && <View style={styles.typePicker}>
-                  <Picker
-                    selectedValue={taskType}
-                    style={styles.pickerItem}
-                    onValueChange={(itemValue, itemIndex) =>
-                  setTaskType(itemValue)
-                    }>
-                    <Picker.Item label="Home" value="home" />
-                    <Picker.Item label="Work" value="work" />
-                  </Picker>
-                </View>}
+              <PressableItem 
+                label={'Type'}
+                value={taskType}
+                type='task'
+                onPress={_onToggleTaskTask}
+                />
+              <TypePicker 
+              open={isTaskTypeOpen}
+              value={taskType}
+              setTaskType={setTaskType}
+              />
+  
               </View> 
             
             </View>
