@@ -1,5 +1,5 @@
 
-import React, { useCallback, useEffect, useLayoutEffect, useState } from "react";
+import React, { useCallback, useLayoutEffect, useState } from "react";
 import { useIsFocused, useNavigation } from "@react-navigation/native";
 
 import Container from "@components/container";

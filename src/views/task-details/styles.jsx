@@ -1,4 +1,3 @@
-import COLORS from "@utils/colors";
 import { SIZE, FAMILY } from "@utils/fonts";
 
 import { StyleSheet } from 'react-native';

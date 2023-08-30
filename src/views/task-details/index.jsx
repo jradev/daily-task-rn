@@ -1,9 +1,9 @@
 
-import React, { useCallback, useEffect, useLayoutEffect, useState } from "react";
+import React, { useCallback, useLayoutEffect } from "react";
 import { useIsFocused, useNavigation } from "@react-navigation/native";
 
 import Container from "@components/container";
-import { Alert, Animated, Button, Text, View, useColorScheme } from "react-native";
+import { Alert, Button, Text, View, useColorScheme } from "react-native";
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { lightStyles } from "./styles";
 import COLORS from "@utils/colors";
