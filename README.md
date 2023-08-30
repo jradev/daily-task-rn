@@ -57,6 +57,13 @@ To run the application
 - iOS
     - [How to build & publish to appstore](https://reactnative.dev/docs/publishing-to-app-store)
 
+## UI Screens
+<p float="left">
+    <img src="/screenshots/home.png" width="150"/>
+    <img src="/screenshots/create-task.png" width="150"/> 
+    <img src="/screenshots/details.png" width="150"/> 
+</p>
+
 
 ## Issues?
 
