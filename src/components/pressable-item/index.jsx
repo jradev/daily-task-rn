@@ -9,7 +9,7 @@ import COLORS from "@utils/colors";
 const PressableItem = (props) => {
     const { label, value, onPress = () => {}, type = 'date' } = props;
 
-    const formattedValue = formatDate(value);
+    const formattedValue = formatDate(new Date(value));
 
     const valueIndicatorStyle = type === 'task' ? {
         backgroundColor: value === TASK_TYPE.home ? 
