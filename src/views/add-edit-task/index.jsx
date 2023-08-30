@@ -32,7 +32,7 @@ export default function AddEditTaskScreen(props){
 
     const [isEndDateOpen, setIsEndDateOpen] = useState(false);
     const [isTaskTypeOpen, setIsTaskTypeOpen] = useState(false);
-    const [endDate, setEndDate] = useState(isEditing ? selectedTask?.task?.endDate : null);
+    const [endDate, setEndDate] = useState(isEditing ? new Date(selectedTask?.task?.endDate) : null);
 
     const dispatch = useDispatch();
 
@@ -65,9 +65,9 @@ export default function AddEditTaskScreen(props){
     }, [isStartDateOpen]);
 
     const _onToggleEndDate = useCallback(() => {
-      if(!endDate) setEndDate(new Date(new Date().setHours((new Date()).getHours() + 1)));
+      if(!endDate) setEndDate(new Date(new Date(startDate).setHours((new Date(startDate)).getHours() + 1)));
       setIsEndDateOpen(date => !date);
-    }, [isEndDateOpen]);
+    }, [isEndDateOpen, startDate]);
 
     const _onToggleTaskTask = useCallback(() => {
       setIsTaskTypeOpen(open => !open);
@@ -87,7 +87,7 @@ export default function AddEditTaskScreen(props){
           title: taskTitle,
           description: taskDescription,
           startDate: startDate,
-          endDate: endDate ? endDate : new Date(new Date().setHours((new Date()).getHours() + 1)),
+          endDate: endDate ? endDate : new Date(new Date(startDate).setHours((new Date(startDate)).getHours() + 1)),
           type: taskType,
           status: selectedTask.status,
         }));
@@ -97,7 +97,7 @@ export default function AddEditTaskScreen(props){
           title: taskTitle,
           description: taskDescription,
           startDate: startDate,
-          endDate: endDate ? endDate : new Date(new Date().setHours((new Date()).getHours() + 1)),
+          endDate: endDate ? endDate : new Date(new Date(startDate).setHours((new Date(startDate)).getHours() + 1)),
           type: taskType,
           status: STATUS.upcoming,
         }));
