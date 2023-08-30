@@ -9,9 +9,8 @@ import { lightStyles } from "./styles";
 import COLORS from "@utils/colors";
 import { formatDate } from "@utils/helper";
 import { useDispatch, useSelector } from "react-redux";
-import { STATUS, ADD_EDIT_TASK_SCREEN } from "@utils/constant";
+import { STATUS, ADD_EDIT_TASK_SCREEN, TASK_TYPE } from "@utils/constant";
 import { doneTask, deleteTask } from "@app-redux/action";
-import { TASK_TYPE } from "@utils/constant";
 
 export default function(props){
     

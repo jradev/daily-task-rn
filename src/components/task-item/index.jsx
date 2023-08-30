@@ -3,11 +3,9 @@ import { Pressable, Text, View, useColorScheme } from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {darkStyles , lightStyles} from './styles';
 import COLORS from '@utils/colors';
-import { STATUS } from '@utils/constant';
+import { STATUS, TASK_TYPE, VIEW_TASK_SCREEN } from '@utils/constant';
 import { useNavigation } from '@react-navigation/native';
-import { VIEW_TASK_SCREEN } from '@utils/constant';
 import { isSameDay, formatDate } from '@utils/helper';
-import { TASK_TYPE } from '@utils/constant';
 import { useDispatch } from 'react-redux';
 import { viewTask } from '../../redux/action';
 
