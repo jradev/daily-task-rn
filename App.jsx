@@ -6,9 +6,6 @@
  */
 
 import React, { useEffect } from 'react';
-import {
-  useColorScheme,
-} from 'react-native';
 
 import BootSplash from "react-native-bootsplash";
 
@@ -21,7 +18,6 @@ import { store, persistor } from '@app-redux/store';
 import AppNavigation from '@navigation/index';
 
 function App(props) {
-  const isDarkMode = useColorScheme() === 'dark';
 
   useEffect(() => {
     const init = setTimeout(() => {BootSplash?.hide({ fade: true })}, 1000);
