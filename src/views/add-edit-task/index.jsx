@@ -1,9 +1,9 @@
 
 import React, { useCallback, useLayoutEffect, useState } from "react";
-import { useIsFocused, useNavigation } from "@react-navigation/native";
+import { useNavigation } from "@react-navigation/native";
 
 import Container from "@components/container";
-import { Animated, Button, Pressable, ScrollView, Text, TextInput, View, useColorScheme } from "react-native";
+import { Animated, Button, ScrollView, TextInput, View, useColorScheme } from "react-native";
 import { lightStyles } from "./styles";
 import COLORS from "@utils/colors";
 import DatePicker from "react-native-date-picker";
@@ -34,8 +34,6 @@ export default function AddEditTaskScreen(props){
     const [isTaskTypeOpen, setIsTaskTypeOpen] = useState(false);
     const [endDate, setEndDate] = useState(isEditing ? selectedTask?.task?.endDate : null);
 
-    const isFocused = useIsFocused();
-
     const dispatch = useDispatch();
 
     const theme = useColorScheme();
@@ -47,7 +45,7 @@ export default function AddEditTaskScreen(props){
     }, [navigation, startDate, endDate, taskTitle, taskDescription, taskType, isEditing]);
 
 
-    const initHeader = () => {
+    const initHeader = useCallback(() => {
       navigation.setOptions({
         headerTitle: `${isEditing ? 'Update' : 'Create'} Task`,
         headerRight: () => (
@@ -58,7 +56,7 @@ export default function AddEditTaskScreen(props){
           />
         ),
       });
-    }
+    }, [navigation, startDate, endDate, taskTitle, taskDescription, taskType, isEditing]);
 
 
     const _onToggleStartDate = useCallback(() => {

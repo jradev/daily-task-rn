@@ -23,13 +23,17 @@ export default function TaskDetailsScreen(props){
     const styles = lightStyles;
 
     useLayoutEffect(() => {
+       initHeader();
+    }, [navigation]);
+
+    const initHeader = useCallback(() => {
         navigation.setOptions({
-          headerRight: () => (
-            <Button 
-            title="Edit"
-            onPress={_onEditTask}
-            />
-          ),
+            headerRight: () => (
+                <Button 
+                title="Edit"
+                onPress={_onEditTask}
+                />
+            ),
         });
     }, [navigation]);
 
