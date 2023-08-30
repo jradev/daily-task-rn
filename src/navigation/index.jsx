@@ -20,6 +20,25 @@ const Stack = createNativeStackNavigator();
 export default AppNavigation = (props) => {
     const theme = useColorScheme();
 
+    const renderHomeRight = (navigation) => {
+        return (
+            <Pressable
+                onPress={() => navigation.push(ADD_EDIT_TASK_SCREEN)}
+            >
+            <MaterialCommunityIcons name="note-plus-outline" color={theme === 'dark' ? COLORS.white : COLORS.black } size={24} />
+            </Pressable>
+
+        );
+    }
+
+    const renderCreateTaskLeftHeader = () => (
+        <Button
+        color={COLORS.red}
+        onPress={() => navigation.goBack()}
+        title='Cancel'
+        />
+    );
+
     return (
         <NavigationContainer>
         <Stack.Navigator
@@ -35,13 +54,7 @@ export default AppNavigation = (props) => {
             name={HOME_SCREEN}
             options={({route, navigation}) => ({
             headerTitle: '',
-            headerRight: () => (
-                <Pressable
-                    onPress={() => navigation.push(ADD_EDIT_TASK_SCREEN)}
-                >
-                <MaterialCommunityIcons name="note-plus-outline" color={theme === 'dark' ? COLORS.white : COLORS.black } size={24} />
-                </Pressable>
-                ),
+            headerRight: () => renderHomeRight(navigation),
             })}
             
             component={HomeScreen}
@@ -55,14 +68,7 @@ export default AppNavigation = (props) => {
                 headerStyle: {
                     color: theme === 'dark' ? COLORS.white : COLORS.black
                 },
-                headerLeft: () => (
-                    <Button
-                    color={COLORS.red}
-                    onPress={() => navigation.goBack()}
-                    title='Cancel'
-                    />
-                    
-                    ),
+                headerLeft: () => renderCreateTaskLeftHeader(),
                 }
             )}
             component={AddEditTaskScreen}
