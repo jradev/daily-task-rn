@@ -1,9 +1,9 @@
 
 import React, { useCallback, useLayoutEffect } from "react";
-import { useIsFocused, useNavigation } from "@react-navigation/native";
+import { useNavigation } from "@react-navigation/native";
 
 import Container from "@components/container";
-import { Alert, Button, Text, View, useColorScheme } from "react-native";
+import { Alert, Button, Text, View } from "react-native";
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { lightStyles } from "./styles";
 import COLORS from "@utils/colors";
@@ -12,22 +12,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { STATUS, ADD_EDIT_TASK_SCREEN, TASK_TYPE } from "@utils/constant";
 import { doneTask, deleteTask } from "@app-redux/action";
 
-export default function(props){
+export default function TaskDetailsScreen(props){
     
     const navigation = useNavigation();
 
     const selectedTask = useSelector(store => store.task);
 
     const dispatch = useDispatch();
-
-
     const { task } = selectedTask;
-
-    const isFocused = useIsFocused();
-
-    const theme = useColorScheme();
-
-
     const styles = lightStyles;
 
     useLayoutEffect(() => {

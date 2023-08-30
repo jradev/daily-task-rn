@@ -8,7 +8,7 @@ import { useSelector } from "react-redux";
 import EmptyList from "@components/empty-list";
 
 
-export default function(props){
+export default function HomeScreen(props){
 
     const tasks = useSelector(store => store?.tasks);
 

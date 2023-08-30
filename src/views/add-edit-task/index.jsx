@@ -13,7 +13,7 @@ import { STATUS, TASK_TYPE } from "@utils/constant";
 import { useDispatch, useSelector } from "react-redux";
 import { addTask, updateTask } from "@app-redux/action";
 
-export default function(props){
+export default function AddEditTaskScreen(props){
     
     const navigation = useNavigation();
 
