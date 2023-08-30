@@ -26,8 +26,8 @@ export default AppNavigation = (props) => {
         screenOptions={{
             headerStyle: {
                 backgroundColor: theme === 'dark' ? COLORS.dark : COLORS.light,
-              },
-            //   headerTintColor: '#fff',
+            },
+            headerTitleAlign: 'center',
         }}
         initialRouteName={HOME_SCREEN}
         >
