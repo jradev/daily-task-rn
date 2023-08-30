@@ -3,7 +3,7 @@ import React, { useCallback, useEffect, useLayoutEffect, useState } from "react"
 import { useIsFocused, useNavigation } from "@react-navigation/native";
 
 import Container from "@components/container";
-import { Animated, Button, Pressable, Text, TextInput, View, useColorScheme } from "react-native";
+import { Animated, Button, Pressable, ScrollView, Text, TextInput, View, useColorScheme } from "react-native";
 import { lightStyles } from "./styles";
 import COLORS from "@utils/colors";
 import DatePicker from "react-native-date-picker";
@@ -110,6 +110,7 @@ export default function(props){
 
     return (
         <Container>
+          <ScrollView style={styles.scroll}>
             <View style={styles.container}>
               <TextInput 
               defaultValue={taskTitle}
@@ -125,6 +126,7 @@ export default function(props){
               placeholder="Description"
               style={styles.description}
               multiline={true}
+              numberOfLines={6}
               />
             </View>
 
@@ -175,6 +177,7 @@ export default function(props){
                 {isTaskTypeOpen && <View style={styles.typePicker}>
                   <Picker
                     selectedValue={taskType}
+                    style={styles.pickerItem}
                     onValueChange={(itemValue, itemIndex) =>
                   setTaskType(itemValue)
                     }>
@@ -185,6 +188,8 @@ export default function(props){
               </View> 
             
             </View>
+
+            </ScrollView>
             
         </Container>
     )

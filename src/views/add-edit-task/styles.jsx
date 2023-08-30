@@ -1,10 +1,13 @@
 import COLORS from "@utils/colors";
 import { SIZE, FAMILY } from "@utils/fonts";
 
-import { StyleSheet } from 'react-native';
+import { Platform, StyleSheet } from 'react-native';
 
 
 export const lightStyles = StyleSheet.create({
+    scroll: {
+        flexGrow: 1
+    },
     container: {
         backgroundColor: COLORS.lightergray,
         margin: 16,
@@ -23,8 +26,9 @@ export const lightStyles = StyleSheet.create({
         paddingVertical: 8,
         minHeight: 120,
         verticalAlign: 'top',
+        textAlignVertical: 'top',
         fontSize: SIZE.regular,
-        fontFamily: FAMILY.regular
+        fontFamily: FAMILY.regular,
     },
     dateTimeContainer: {
       backgroundColor: COLORS.lightergray,
@@ -36,6 +40,12 @@ export const lightStyles = StyleSheet.create({
     },
     typePicker: {
         flex: 1
+    },
+    pickerItem: {
+        marginLeft: Platform.select({
+            android: -12,
+            ios: 0
+        }),
     },
     dateRow: {
         flexDirection: 'row',
