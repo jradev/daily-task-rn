@@ -7,3 +7,7 @@ export const formatDate = (date, format = 'MMM D YYYY, h:mm A') => {
 export const isSameDay = (day1, day2) => {
   return moment(day1).isSame(moment(day2), 'date');
 };
+
+export const isDayAhead = (day1, day2) => {
+  return moment(day1).isAfter(moment(day2), 'date');
+};

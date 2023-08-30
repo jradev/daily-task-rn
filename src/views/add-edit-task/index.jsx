@@ -10,8 +10,9 @@ import DatePicker from "react-native-date-picker";
 import { STATUS } from "@utils/constant";
 import { useDispatch, useSelector } from "react-redux";
 import { addTask, updateTask } from "@app-redux/action";
-import TypePicker from "../../components/type-picker";
-import PressableItem from "../../components/pressable-item";
+import TypePicker from "@components/type-picker";
+import PressableItem from "@components/pressable-item";
+import { isDayAhead } from "@utils/helper";
 
 export default function AddEditTaskScreen(props){
     
@@ -75,7 +76,11 @@ export default function AddEditTaskScreen(props){
 
     const _onSelectStartDate = useCallback((date) => {
       setStartDate(date);
-    }, []);
+      // SET A DEFAULT DATE WHEN CHANGED
+      if(isDayAhead(date, endDate)){
+        setEndDate(new Date(new Date(date).setHours((new Date(date)).getHours() + 1)))
+      }
+    }, [endDate]);
 
     const _onSelectEndDate = useCallback((date) => {
       setEndDate(date);
@@ -157,6 +162,7 @@ export default function AddEditTaskScreen(props){
                 {isEndDateOpen && <Animated.View style={styles.picker}>
                   <DatePicker
                     mode='datetime'
+                    minimumDate={startDate}
                     date={endDate}
                     onDateChange={_onSelectEndDate}
 
