@@ -45,6 +45,7 @@ To run the application
 - [moment](https://momentjs.com/docs/) for handling date format & presentable date display
 - [react-native-vector-icons](https://github.com/oblador/react-native-vector-icons) Used for common vector icons
 - [react-native-uuid](https://github.com/eugenehp/react-native-uuid) Used for random id for each task
+- [@reduxjs/toolkit](https://github.com/reduxjs/redux-toolkit) for an updated way of handling redux
 
 
 ## Build
