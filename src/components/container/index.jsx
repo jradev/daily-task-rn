@@ -12,7 +12,7 @@ export default Container = (props) => {
     const styles = theme === 'dark' ? darkStyles : lightStyles;
 
     return(
-        <View style={[styles.container, style && style]}>
+        <View style={[styles.container, style ?? style]}>
             {children}
         </View>
     )

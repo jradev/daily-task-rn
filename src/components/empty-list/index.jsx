@@ -6,14 +6,12 @@ import {darkStyles, lightStyles} from './styles';
 
 export default EmptyList = (props) => {
 
-    const { style } = props;
-
     const theme = useColorScheme();
 
     const styles = theme === 'dark' ? darkStyles : lightStyles;
 
     return(
-        <View style={[styles.container, style && style]}>
+        <View style={styles.container}>
             <MaterialCommunityIcons name="file-find-outline" color={'rgba(0,0,0,0.7)'} size={72} />
             <Text style={styles.title}>No task found.</Text>
         </View>
