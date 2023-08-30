@@ -17,7 +17,7 @@ import TaskDetailsScreen from '../views/task-details';
 
 const Stack = createNativeStackNavigator();
 
-export default AppNavigation = (props) => {
+const AppNavigation = (props) => {
     const theme = useColorScheme();
 
     const renderHomeRight = (navigation) => {
@@ -31,7 +31,7 @@ export default AppNavigation = (props) => {
         );
     }
 
-    const renderCreateTaskLeftHeader = () => (
+    const renderCreateTaskLeftHeader = (navigation) => (
         <Button
         color={COLORS.red}
         onPress={() => navigation.goBack()}
@@ -68,7 +68,7 @@ export default AppNavigation = (props) => {
                 headerStyle: {
                     color: theme === 'dark' ? COLORS.white : COLORS.black
                 },
-                headerLeft: () => renderCreateTaskLeftHeader(),
+                headerLeft: () => renderCreateTaskLeftHeader(navigation),
                 }
             )}
             component={AddEditTaskScreen}
@@ -91,3 +91,5 @@ export default AppNavigation = (props) => {
         </NavigationContainer>
     );
 };
+
+export default AppNavigation;
