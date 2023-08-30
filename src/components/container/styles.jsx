@@ -1,6 +1,6 @@
 import COLORS from "@utils/colors";
 
-import { StyleSheet, Appearance } from 'react-native';
+import { StyleSheet } from 'react-native';
 
 
 export const lightStyles = StyleSheet.create({

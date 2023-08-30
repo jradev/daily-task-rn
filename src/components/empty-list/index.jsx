@@ -4,7 +4,7 @@ import { Text, View, useColorScheme } from 'react-native';
 import {darkStyles, lightStyles} from './styles';
 
 
-export default EmptyList = (props) => {
+const EmptyList = (props) => {
 
     const theme = useColorScheme();
 
@@ -17,3 +17,5 @@ export default EmptyList = (props) => {
         </View>
     )
 }
+
+export default EmptyList;

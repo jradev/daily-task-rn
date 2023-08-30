@@ -1,9 +1,9 @@
 import React from 'react';
-import { Text, View, useColorScheme } from 'react-native';
+import { View, useColorScheme } from 'react-native';
 import {darkStyles, lightStyles} from './styles';
 
 
-export default Container = (props) => {
+const Container = (props) => {
 
     const { style, children } = props;
 
@@ -17,3 +17,5 @@ export default Container = (props) => {
         </View>
     )
 }
+
+export default Container;
