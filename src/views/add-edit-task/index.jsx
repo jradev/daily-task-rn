@@ -24,7 +24,7 @@ export default function AddEditTaskScreen(props){
     const selectedTask = useSelector(store => store.task);
 
     const [isStartDateOpen, setIsStartDateOpen] = useState(false);
-    const [startDate, setStartDate] = useState(isEditing ? selectedTask?.task?.startDate : null);
+    const [startDate, setStartDate] = useState(isEditing ? selectedTask?.task?.startDate :  new Date());
     const [taskType, setTaskType] = useState(isEditing ? selectedTask?.task?.type : 'home');
 
     const [taskTitle, setTaskTitle] = useState(isEditing ? selectedTask?.task?.title : null);
@@ -32,7 +32,7 @@ export default function AddEditTaskScreen(props){
 
     const [isEndDateOpen, setIsEndDateOpen] = useState(false);
     const [isTaskTypeOpen, setIsTaskTypeOpen] = useState(false);
-    const [endDate, setEndDate] = useState(isEditing ? new Date(selectedTask?.task?.endDate) : null);
+    const [endDate, setEndDate] = useState(isEditing ? new Date(selectedTask?.task?.endDate) : new Date(new Date().setHours((new Date()).getHours() + 1)));
 
     const dispatch = useDispatch();
 
