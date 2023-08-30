@@ -42,6 +42,7 @@ export const lightStyles = StyleSheet.create({
         justifyContent: 'space-between',
     },
     deleteTask: {
-        color: COLORS.red,
-    }
+        alignItems: 'center',
+        marginTop: 8
+    },
 });

@@ -83,7 +83,7 @@ export default function(props){
             <View style={{backgroundColor: task?.type === TASK_TYPE.home ? COLORS.lightblue: COLORS.red, height: 2}} />
             <View style={styles.container}>
                 <Text style={styles.title}>{task?.title}</Text>
-                {task?.description && <Text style={styles.description}>{task?.description}</Text>}
+                {task?.description && task?.description?.trim() !== '' && <Text style={styles.description}>{task?.description}</Text>}
             </View>
             <View style={styles.container}>
                 <Text style={styles.date}>{formatDate(new Date(), 'LLLL')}</Text>
@@ -103,11 +103,13 @@ export default function(props){
                 />
             </View>
             }
+            <View style={styles.deleteTask}>
             <Button 
             color={COLORS.red}
             onPress={_onDeleteTask}
             title="Delete task"
             />
+            </View>
         </Container>
     )
 }
