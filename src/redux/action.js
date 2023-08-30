@@ -6,8 +6,6 @@ export const VIEW_TASK = 'VIEW_TASK';
 export const DONE_TASK = 'DONE_TASK';
 export const DELETE_TASK = 'DELETE_TASK';
 
-
-
 export const addTask = task => ({
   type: ADD_TASK,
   payload: {
@@ -27,20 +25,20 @@ export const updateTask = (id, task) => ({
 export const viewTask = id => ({
   type: VIEW_TASK,
   payload: {
-    id: id
+    id: id,
   },
 });
 
 export const doneTask = id => ({
   type: DONE_TASK,
   payload: {
-    id: id
+    id: id,
   },
 });
 
 export const deleteTask = id => ({
   type: DELETE_TASK,
   payload: {
-    id: id
+    id: id,
   },
 });

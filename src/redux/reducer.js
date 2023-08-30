@@ -1,9 +1,15 @@
-import {ADD_TASK, VIEW_TASK, DONE_TASK, DELETE_TASK, UPDATE_TASK} from '@app-redux/action';
-import { STATUS } from '@utils/constant';
+import {
+  ADD_TASK,
+  VIEW_TASK,
+  DONE_TASK,
+  DELETE_TASK,
+  UPDATE_TASK,
+} from '@app-redux/action';
+import {STATUS} from '@utils/constant';
 
 const initialState = {
   tasks: [],
-  task: null
+  task: null,
 };
 
 const appReducer = (state = initialState, action) => {
@@ -20,36 +26,36 @@ const appReducer = (state = initialState, action) => {
       return {
         ...state,
         tasks: state?.tasks?.map(i => {
-          if(i?.id === id){
-            return({
+          if (i?.id === id) {
+            return {
               id: i?.id,
-              task: task
-            });
+              task: task,
+            };
           }
           return i;
-        })
+        }),
       };
     }
     case VIEW_TASK: {
-      const { id } = action.payload;
+      const {id} = action.payload;
       return {
         ...state,
         task: state?.tasks?.filter(i => i?.id === id)[0],
       };
     }
     case DONE_TASK: {
-      const { id } = action.payload;
+      const {id} = action.payload;
       return {
         ...state,
         tasks: state?.tasks?.map(i => {
-          if(i?.id === id){
-            return({
+          if (i?.id === id) {
+            return {
               id: i?.id,
               task: {
                 ...i?.task,
                 status: STATUS.done,
-              }
-            })
+              },
+            };
           }
           return i;
         }),
@@ -58,12 +64,12 @@ const appReducer = (state = initialState, action) => {
           task: {
             ...state?.task?.task,
             status: STATUS.done,
-          }
+          },
         },
       };
     }
     case DELETE_TASK: {
-      const { id } = action.payload;
+      const {id} = action.payload;
       return {
         ...state,
         tasks: state?.tasks?.filter(i => i?.id !== id),
