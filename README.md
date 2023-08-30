@@ -52,7 +52,7 @@ To run the application
 - Android
     - APK
         `cd android && ./gradlew clean && ./gradlew assembleRelease`
-    - ABB
+    - AAB
         `cd android && ./gradlew clean && ./gradlew bundleRelease`
 - iOS
     - [How to build & publish to appstore](https://reactnative.dev/docs/publishing-to-app-store)
