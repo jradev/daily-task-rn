@@ -16,8 +16,6 @@ const Item = (props) => {
     
     const { task, id } = props;
 
-    if(!task) return null;
-
     const { type, title, status, startDate, endDate } =  task;
 
     const navigation = useNavigation();
