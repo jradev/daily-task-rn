@@ -7,7 +7,7 @@ import { Alert, Button, Text, View } from "react-native";
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { lightStyles } from "./styles";
 import COLORS from "@utils/colors";
-import { formatDate } from "@utils/helper";
+import { formatDate, isSameDay } from "@utils/helper";
 import { useDispatch, useSelector } from "react-redux";
 import { STATUS, ADD_EDIT_TASK_SCREEN, TASK_TYPE } from "@utils/constant";
 import { doneTask, deleteTask } from "@app-redux/action";
@@ -21,6 +21,8 @@ export default function TaskDetailsScreen(props){
     const dispatch = useDispatch();
     const { task } = selectedTask;
     const styles = lightStyles;
+
+    const sameDay = isSameDay(task?.startDate, task?.endDate);
 
     useLayoutEffect(() => {
        initHeader();
@@ -81,7 +83,20 @@ export default function TaskDetailsScreen(props){
                 {task?.description && task?.description?.trim() !== '' && <Text style={styles.description}>{task?.description}</Text>}
             </View>
             <View style={styles.container}>
-                <Text style={styles.date}>{formatDate(new Date(), 'LLLL')}</Text>
+
+                {
+                sameDay 
+                ?
+                <React.Fragment>
+                    <Text style={styles.date}>{formatDate(task?.startDate, 'dddd, LL')}</Text>
+                    <Text style={styles.time}>{formatDate(task?.startDate, 'LT')} - {formatDate(task?.endDate, 'LT')}</Text>
+                </React.Fragment>
+                :
+                <React.Fragment>
+                    <Text style={styles.date}>{formatDate(task?.startDate, 'MMM D')} - {formatDate(task?.endDate, 'D YYYY')}</Text>
+                    <Text style={styles.time}>{formatDate(task?.startDate, 'LT')} - {formatDate(task?.endDate, 'LT')}</Text>
+                </React.Fragment>
+                }
             </View>
 
             {
